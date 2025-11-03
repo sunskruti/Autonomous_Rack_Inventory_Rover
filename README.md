@@ -1,70 +1,89 @@
-# Autonomous_Rack_Inventory_Rover
-# 🧠 Autonomous Warehouse Rover – Track A: Systems & Methodology
+# 🤖 Autonomous_Rack_Inventory_Rover
 
-This project simulates an **autonomous warehouse rover** that performs three major functions:  
-1. **QR Code Scanning & Data Management**  
-2. **Rack Detection & Precision Alignment**  
-3. **X–Y Drive & Motion Control**
-
-It is designed entirely using **Python, OpenCV, NumPy, and Matplotlib**, without any ROS or Gazebo dependency, to demonstrate the core logic and methodology of autonomous rack inventory systems.
+A lightweight Python project simulating core functions of an autonomous warehouse rover.
 
 ---
 
-## 📘 Overview
+## 📂 Files Overview
 
-The goal of this project is to design and simulate the core intelligence of a warehouse rover that can identify rack QR codes, align precisely with racks, and plan its path efficiently.  
-This implementation focuses on algorithms and data handling, keeping the simulation lightweight and reproducible on any system.
+### `qr_scanning.py`
+Detects and decodes QR codes from camera or video feed.  
+- Performs blur and lighting correction.  
+- Extracts QR data and saves it with timestamp and image snippet in a JSON file.  
+
+### `rack_detection.py`
+Simulates rack alignment using virtual distance sensors.  
+- Calculates alignment error (left vs right).  
+- Uses proportional control (PID concept) to achieve parallel positioning.  
+- Visualizes convergence through a simple graph.  
+
+### `motion_control.py`
+Simulates rover movement using differential drive kinematics.  
+- Computes position and orientation from wheel speeds.  
+- Plots the robot’s curved or straight trajectory using Matplotlib.  
 
 ---
 
-## 🧩 Features
+## 🧠 Tools Used
+- Python  
+- OpenCV  
+- NumPy  
+- Matplotlib  
 
-### 🔹 QR Code Scanning & Data Management
-- Detects and decodes 5×5 cm QR codes from video or webcam feed.  
-- Performs:
-  - Blur detection  
-  - Lighting adjustment  
-  - Perspective correction  
-- Stores all decoded QR data in JSON format with:
-  - Timestamp  
-  - Rack ID  
-  - QR Data  
-  - Saved image snippet  
+---
 
-**Script:** `qr_scanning.py`  
-**Run:**  
-```bash
-python qr_scanning.py
+## 🏁 Summary
+These scripts together represent the vision, control, and motion logic of an autonomous rack inventory rover — focusing purely on simulation and algorithm design without requiring ROS or hardware.
 
+🦾 Autonomous Robot Navigation using ROS2
+This project demonstrates autonomous robot navigation using ROS2, Gazebo, and Nav2.
+ The robot can automatically follow a saved path (.pth file) or a series of waypoints in simulation or real environment.
 
-Open three terminals:
-
-🖥 Terminal 1 — Gazebo
-cd ~/turtlebot3_nav_ws/src
-source ~/turtlebot3_nav_ws/install/setup.bash
-./launch_gazebo.py
-
-🧭 Terminal 2 — Navigation
-cd ~/turtlebot3_nav_ws/src
-source ~/turtlebot3_nav_ws/install/setup.bash
-./launch_nav2.py
-
-🤖 Terminal 3 — Auto Navigation
-cd ~/turtlebot3_nav_ws/src
-source ~/turtlebot3_nav_ws/install/setup.bash
-./auto_nav.py
+🧰 Prerequisites
+Tested On:
+Ubuntu 22.04
 
 
-The robot will automatically navigate through the waypoints you defined.
-
-🛠 Optional Improvements
-
-Replace the static waypoints with QR-code-detected positions or warehouse coordinates.
-
-Add patrolling loops:
-
-while True:
-    navigator.followWaypoints(poses)
+ROS2 Humble / Iron
 
 
-Use rclpy.spin_once() to integrate live feedback.
+Gazebo Fortress / Classic
+
+
+Python 3.10+
+🧭 Run the Simulation
+1️⃣ Launch Gazebo Environment
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+
+2️⃣ Launch Navigation Stack (Nav2)
+In a new terminal:
+source ~/ros2_ws/install/setup.bash
+ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/path/to/map.yaml
+
+
+🗺️ Run the Path Follower Script
+The path_follower.py node reads a .pth (saved path) file and sends navigation goals to the robot automatically.
+Example .pth format
+{
+  "poses": [
+    {"x": 1.2, "y": 0.5, "w": 1.0},
+    {"x": 2.0, "y": 1.0, "w": 1.0},
+    {"x": 3.5, "y": 1.5, "w": 1.0}
+  ]
+}
+
+Run the script:
+source ~/ros2_ws/install/setup.bash
+ros2 run autonomous_nav path_follower.py
+
+The robot will:
+Load waypoints from saved_path.pth
+
+
+Publish goals to /goal_pose
+
+
+Move autonomously along the saved path
+
+
+
