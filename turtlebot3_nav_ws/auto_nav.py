@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import time
 from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
@@ -8,12 +8,9 @@ from rclpy.duration import Duration
 def main():
     rclpy.init()
     navigator = BasicNavigator()
-
-    # Wait for Nav2 to be active
     print("⏳ Waiting for Nav2 lifecycle nodes to activate...")
     navigator.waitUntilNav2Active()
 
-    # Define waypoints (x, y, yaw)
     waypoints = [
         (2.0, 0.0, 0.0),
         (2.0, 2.0, 1.57),
