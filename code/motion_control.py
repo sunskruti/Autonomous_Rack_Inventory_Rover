@@ -1,14 +1,10 @@
-# rack_detection_revised.py
 import numpy as np
 import matplotlib.pyplot as plt
-
-# Simulated rack alignment using depth sensor data
-# Assume robot has left/right depth sensors giving distance in cm
 np.random.seed(0)
 
-left_dist  = 80.0  # cm
-right_dist = 60.0  # cm
-target_diff = 0.0  # perfect alignment
+left_dist  = 80.0  
+right_dist = 60.0  
+target_diff = 0.0 
 kp, ki, kd = 0.4, 0.05, 0.2
 
 integral = 0
@@ -16,20 +12,20 @@ prev_error = 0
 history = []
 
 for i in range(30):
-    error = right_dist - left_dist  # +ve means right is farther → rotate right
+    error = right_dist - left_dist  
     integral += error
     derivative = error - prev_error
-    control = kp*error + ki*integral + kd*derivative  # PID output
+    control = kp*error + ki*integral + kd*derivative  
     prev_error = error
 
-    # Simulate applying control (robot rotates slightly)
+    
     left_dist  += control * 0.15 + np.random.normal(0,0.5)
     right_dist -= control * 0.15 + np.random.normal(0,0.5)
 
     history.append((i, left_dist, right_dist, error))
     print(f"Step {i}: Error={error:.2f}, Control={control:.2f}")
 
-# Plot alignment progress
+
 iters = [h[0] for h in history]
 left_vals = [h[1] for h in history]
 right_vals = [h[2] for h in history]
