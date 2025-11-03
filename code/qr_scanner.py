@@ -1,4 +1,4 @@
-# qr_scanning.py
+
 import cv2, json, time, os
 from pyzbar.pyzbar import decode
 import warnings
@@ -9,7 +9,7 @@ OUT_DIR = "output_snippets"
 os.makedirs(OUT_DIR, exist_ok=True)
 results = []
 
-cap = cv2.VideoCapture(0)  # or 'sample_frames/video.mp4'
+cap = cv2.VideoCapture(0)  
 print("Press 'q' to quit.")
 
 while True:
@@ -17,16 +17,15 @@ while True:
     if not ret:
         break
 
-    # --- Blur detection ---
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     blur_metric = cv2.Laplacian(gray, cv2.CV_64F).var()
     if blur_metric < 50:
         cv2.putText(frame, "Blurred", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,255),2)
 
-    # --- Lighting adjustment ---
+   
     frame = cv2.convertScaleAbs(frame, alpha=1.2, beta=20)
 
-    # --- QR detection ---
+
     for q in decode(frame):
         data = q.data.decode("utf-8")
         (x,y,w,h) = q.rect
@@ -51,7 +50,7 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
-# --- Save data ---
+
 json_path = r"C:\Users\sansk\qrscanner\qr_results.json"
 with open(json_path,"w") as f:
     json.dump(results, f, indent=2)
