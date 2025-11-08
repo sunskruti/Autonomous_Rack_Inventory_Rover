@@ -1,0 +1,74 @@
+Rack Inventory Rover 
+
+1. Core System Design (80 Points) 
+Choose ONE of the following two tracks (A or B). Both tracks are weighted equally and 
+require a comprehensive, detailed solution. 
+TRACK A: Systems & Methodology (80 Points) 
+Provide a detailed technical paper and methodology addressing the following: 
+● QR Code Scanning & Data Management (35 Points): 
+○ Propose a robust methodology for scanning 5x5 cm QR codes from a moving 
+platform, ensuring a >90% detection rate. 
+○ Detail the image processing pipeline (e.g., blur detection, perspective 
+correction, lighting adjustment). 
+○ Specify the data structure for storing scanned information, which must include 
+a timestamp, rack/shelf identifier, the decoded QR data, and a low-resolution 
+image snippet for verification. 
+● Rack Detection & Precision Alignment (25 Points): 
+○ Propose a sensor-fusion methodology (e.g., using LiDAR, depth cameras, 
+and/or ultrasonic sensors) to detect and align the rover parallel to warehouse 
+racks. 
+○ Your method must be robust to variable ambient lighting, specular reflections 
+from racking, and low-light areas. 
+○ Explain how your system will achieve the required horizontal positioning 
+accuracy of ±10 cm relative to the rack face before initiating a vertical scan. 
+● X-Y Drive & Motion Control (20 Points): 
+○ Analyze and justify the selection of a specific drive mechanism (e.g., 
+differential, omni-directional, Ackerman) for the chassis. 
+○ Your analysis must consider trade-offs between maneuverability in narrow 
+aisles, cost, and control complexity to achieve smooth motion and meet the 
+<3-second path planning time. --- OR --- 
+TRACK B: Detailed Design & Architecture (80 Points) 
+Provide a detailed design and architecture package for the rover, including: 
+● Mechanical Design (CAD & Drawings) (35 Points): 
+○ Provide (3D CAD models, 2D assembly) / manual diagrams for: 
+1. The X-Y chassis, respecting the dimensional constraints (<600mm x 
+450mm, <25kg). 
+2. The Z-motion vertical scanning mechanism, capable of smoothly 
+scanning a full 1.8m rack height and meeting the ±2 cm vertical 
+positioning accuracy. 
+○ Justify material choices and mechanical design decisions. 
+○ Your choice of design and components must justify how the specified 
+accuracies (±10 cm horizontal, ±2 cm vertical) will be achieved. 
+● Camera & Sensor Positioning (25 Points): 
+○ Justify the selection and precise positioning of the primary scanning camera 
+(min. 1920x1080 resolution), including lensing, angle, and lighting strategy. 
+○ Your justification must clearly demonstrate how this configuration will achieve 
+the >90% detection rate for 5x5 cm QR codes under warehouse conditions. 
+○ Detail the placement of all navigation and safety sensors (LiDAR, depth 
+cameras, E-stop buttons). 
+● Robot & Electrical Architecture (20 Points): 
+○ Present a complete robot architecture diagram showing all major components 
+and data flow. 
+○ Provide a detailed List of Materials for key electronic COTS components, 
+including the primary controller (e.g., Raspberry Pi, Jetson Nano), motor 
+drivers, sensors, and power system. 
+2. Simulation & Autonomous Navigation (20 Points) 
+● Gazebo Warehouse Environment (5 points): 
+○ Generate a standard warehouse environment in the Gazebo simulator, 
+including multiple aisles, standardized racks (which may differ from the exact 
+specifications in the original PS), and various obstacles. 
+● SLAM & Navigation (15 Points): 
+○ In the simulated environment, implement, demonstrate, or provide a detailed 
+methodology for a complete SLAM pipeline to generate an accurate map of 
+the warehouse. 
+○ Using the generated map, demonstrate autonomous navigation from a 
+starting point to a designated rack. The rover must demonstrate the ability to 
+navigate to the rack's vicinity; precise alignment for this task is optional. 
+○ Hint: The solution should use a standard navigation stack (e.g., ROS 2 Nav2) 
+and demonstrate robust obstacle avoidance. 
+3. Bonus: Competitive Analysis (Bonus Points) 
+● Conduct a brief market analysis of existing commercial solutions for autonomous 
+warehouse inventory management (excluding Eternal Robotics and its subsidiaries). 
+● Provide a concise summary of their technological approach (e.g., sensor suite, 
+navigation method) and how their solution compares to or aligns with the one 
+proposed in this problem statement.
